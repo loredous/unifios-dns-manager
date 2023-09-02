@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "dns-manager-backend", "dns-manager-backend\dns-manager-backend.pyproj", "{8543FD88-2831-4C1E-9E18-D411013BDE92}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "dns-manager-frontend", "dns-manager-frontend\dns-manager-frontend.esproj", "{D593BA2F-8F48-4224-A82D-B52DFB1A5785}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8543FD88-2831-4C1E-9E18-D411013BDE92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8543FD88-2831-4C1E-9E18-D411013BDE92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D593BA2F-8F48-4224-A82D-B52DFB1A5785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D593BA2F-8F48-4224-A82D-B52DFB1A5785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D593BA2F-8F48-4224-A82D-B52DFB1A5785}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D593BA2F-8F48-4224-A82D-B52DFB1A5785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D593BA2F-8F48-4224-A82D-B52DFB1A5785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D593BA2F-8F48-4224-A82D-B52DFB1A5785}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49304C58-60EF-4556-9840-56BCBF9CD9B1}
+	EndGlobalSection
+EndGlobal
