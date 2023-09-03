@@ -1,0 +1,23 @@
+<clr-modal [(clrModalOpen)]="editModalOpen">
+  <h3 class="modal-title">Edit Address Entry</h3>
+  <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+        <label class="clr-required-mark">DNS Name</label>
+        <input clrInput placeholder="fqdn.local" name="name" [(ngModel)]="addressEntry.fqdn" />
+      </clr-input-container>
+      <clr-input-container>
+        <label class="clr-required-mark">IP Address</label>
+        <input clrInput placeholder="127.0.0.1" name="address" [(ngModel)]="addressEntry.address" />
+      </clr-input-container>
+      <clr-textarea-container>
+        <label>Note</label>
+        <textarea clrTextarea name="note" [(ngModel)]="addressEntry.note"></textarea>
+      </clr-textarea-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="saveEntry()">Save</button>
+  </div>
+</clr-modal>

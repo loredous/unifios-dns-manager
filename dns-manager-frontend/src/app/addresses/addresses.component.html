@@ -1,1 +1,28 @@
-<p>addresses works bruh</p>
+<h1>
+  Addresses
+  <button type="button" class="btn btn-icon" aria-label="add-address" (click)="addItem()">
+    <cds-icon shape="plus"></cds-icon>
+  </button>
+</h1>
+<clr-datagrid>
+  <clr-dg-column clrDgField="name">DNS Name</clr-dg-column>
+  <clr-dg-column clrDgField="address">Address</clr-dg-column>
+  <clr-dg-column clrDgField="note">Note</clr-dg-column>
+  <clr-dg-row *clrDgItems="let address of dnsaddresses">
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="onEdit(address.id)">Edit</button>
+      <button class="action-item" (click)="deleteItem(address)">Delete</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{address.fqdn}}</clr-dg-cell>
+    <clr-dg-cell>{{address.address}}</clr-dg-cell>
+    <clr-dg-cell>{{address.note}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination>
+      <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Entries per page</clr-dg-page-size>
+      {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+      of {{pagination.totalItems}} entries
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+<app-editaddressmodal [addressEntry]="selectedAddress" [editModalOpen]="editModalOpen" (resultAvailable)="editModalClosed($event)"></app-editaddressmodal>

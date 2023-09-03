@@ -1,0 +1,28 @@
+<h1>
+  Forwarders
+  <button type="button" class="btn btn-icon" aria-label="add-forwarder" (click)="addItem()">
+    <cds-icon shape="plus"></cds-icon>
+  </button>
+</h1>
+<clr-datagrid>
+  <clr-dg-column clrDgField="suffix">DNS Suffix</clr-dg-column>
+  <clr-dg-column clrDgField="address">Forward To</clr-dg-column>
+  <clr-dg-column clrDgField="note">Note</clr-dg-column>
+  <clr-dg-row *clrDgItems="let forwarder of dnsforwarders">
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="onEdit(forwarder.id)">Edit</button>
+      <button class="action-item" (click)="deleteItem(forwarder)">Delete</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{forwarder.suffix}}</clr-dg-cell>
+    <clr-dg-cell>{{forwarder.address}}</clr-dg-cell>
+    <clr-dg-cell>{{forwarder.note}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination>
+      <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Entries per page</clr-dg-page-size>
+      {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+      of {{pagination.totalItems}} entries
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+<app-editforwardermodal [forwarderEntry]="selectedForwarder" [editModalOpen]="editModalOpen" (resultAvailable)="editModalClosed($event)"></app-editforwardermodal>

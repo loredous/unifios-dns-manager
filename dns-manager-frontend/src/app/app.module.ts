@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ClarityModule } from "@clr/angular";
-import '@cds/core/icon/register.js';
-import { CdsModule } from '@cds/angular';
-import { ClarityIcons, cogIcon, networkGlobeIcon, helpIcon, libraryIcon } from '@cds/core/icon';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AddressesComponent } from './addresses/addresses.component';
+// Clarity Design System Imports
+import { ClarityModule } from "@clr/angular";
+import '@cds/core/icon/register.js';
+import { CdsModule } from '@cds/angular';
+import { ClarityIcons, cogIcon, networkGlobeIcon, helpIcon, libraryIcon, plusIcon } from '@cds/core/icon';
 
-ClarityIcons.addIcons(cogIcon, networkGlobeIcon, helpIcon, libraryIcon);
+// Internal Imports
+import { AddressesComponent } from './addresses/addresses.component';
+import { ForwardersComponent } from './forwarders/forwarders.component'
+
+ClarityIcons.addIcons(cogIcon, networkGlobeIcon, helpIcon, libraryIcon, plusIcon);
 
 @NgModule({
   declarations: [
@@ -22,10 +26,12 @@ ClarityIcons.addIcons(cogIcon, networkGlobeIcon, helpIcon, libraryIcon);
     ClarityModule,
     HttpClientModule,
     CdsModule,
-    AddressesComponent
+    AddressesComponent,
+    ForwardersComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  
 }

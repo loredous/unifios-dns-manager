@@ -1,23 +1,28 @@
-<header class="header-6">
-  <div class="branding">
-    <a href="/" class="nav-link">
-      <cds-icon shape="network-globe"></cds-icon>
-      <span class="title">UnifiOS DNS Manager</span>
-    </a>
+<div class="main-container">
+  <header class="header-6">
+    <div class="branding">
+      <a href="/" class="nav-link">
+        <cds-icon shape="network-globe"></cds-icon>
+        <span class="title">UnifiOS DNS Manager</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <clr-dropdown>
+        <button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
+          <cds-icon shape="cog"></cds-icon>
+          <cds-icon shape="angle" direction="down"></cds-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a href="..." clrDropdownItem><cds-icon shape="help"></cds-icon> Help</a>
+          <a href="..." clrDropdownItem><cds-icon shape="library"></cds-icon> GitHub</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+    </div>
+  </header>
+  <div class="content-container">
+    <div class="content-area">
+      <app-addresses></app-addresses>
+      <app-forwarders></app-forwarders>
+    </div>
   </div>
-  <div class="header-actions">
-    <clr-dropdown>
-      <button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
-        <cds-icon shape="cog"></cds-icon>
-        <cds-icon shape="angle" direction="down"></cds-icon>
-      </button>
-      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-        <a href="..." clrDropdownItem><cds-icon shape="help"></cds-icon> Help</a>
-        <a href="..." clrDropdownItem><cds-icon shape="library"></cds-icon> GitHub</a>
-      </clr-dropdown-menu>
-    </clr-dropdown>
-  </div>
-</header>
-<section class="addresses">
-  <app-addresses></app-addresses>
-</section>
+</div>
