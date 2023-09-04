@@ -1,3 +1,19 @@
+# 
+# This file is part of the UnifiOS DNS Manager distribution (https://github.com/loredous/unifios-dns-manager).
+# Copyright (c) 2023 Jeremy Banker.
+# 
+# This program is free software: you can redistribute it and/or modify  
+# it under the terms of the GNU General Public License as published by  
+# the Free Software Foundation, version 3.
+#
+# This program is distributed in the hope that it will be useful, but 
+# WITHOUT ANY WARRANTY; without even the implied warranty of 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License 
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
 from typing import Any, ClassVar, List, Self
 from pydantic import BaseModel, ConfigDict, ValidationError, model_validator
 from database import Base, DBAddressEntry, DBForwarderEntry, DBConnection
