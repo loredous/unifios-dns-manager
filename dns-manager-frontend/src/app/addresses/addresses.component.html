@@ -4,7 +4,7 @@
     <cds-icon shape="plus"></cds-icon>
   </button>
 </h1>
-<clr-datagrid>
+<clr-datagrid [clrDgLoading]="loading" (clrDgRefresh)="refreshData()">
   <clr-dg-column clrDgField="name">DNS Name</clr-dg-column>
   <clr-dg-column clrDgField="address">Address</clr-dg-column>
   <clr-dg-column clrDgField="note">Note</clr-dg-column>

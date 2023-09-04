@@ -9,8 +9,13 @@ import { DataInterface } from './dataInterface.service';
 })
 export class AppComponent {
   title = 'UnifiOS DNS Manager';
+  helpModalIsOpen: boolean = false;
 
   constructor() {
+  }
+
+  openHelpModal() {
+    this.helpModalIsOpen = true;
   }
   
 }

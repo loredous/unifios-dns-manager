@@ -19,25 +19,37 @@ export class ForwardersComponent {
   selectedForwarder!: DnsForwarderEntry;
   dnsforwarders!: DnsForwarderEntry[];
   editModalOpen: boolean = false;
+  loading: boolean = false;
 
   constructor() {
     this.selectedForwarder = {} as DnsForwarderEntry;
     this.refreshData();
   }
 
-  onEdit(addressId: number) {
-    this.selectedForwarder = this.dataInterfaceService.getForwarderById(addressId);
+  onEdit(forwarderId: number) {
+    this.loading = true
+    this.dataInterfaceService.getForwarderById(forwarderId).subscribe(
+      (response: DnsForwarderEntry) => { this.selectedForwarder = response; this.loading = false; },
+      (error) => { console.warn(error); this.selectedForwarder = {} as DnsForwarderEntry; this.loading = false; }
+    )
     this.editModalOpen = true;
   }
 
   refreshData() {
-    this.dnsforwarders = this.dataInterfaceService.getAllForwarders();
+    this.loading = true
+    this.dataInterfaceService.getAllForwarders().subscribe(
+      (response: DnsForwarderEntry[]) => { this.dnsforwarders = response; this.loading = false; },
+      (error) => { console.warn(error); this.dnsforwarders = []; this.loading = false; }
+    )
   }
 
   editModalClosed(result: EditModalResult) {
     this.editModalOpen = false;
     if (result.save) {
-      this.dataInterfaceService.updateForwarder(result.item as DnsForwarderEntry);
+      this.dataInterfaceService.updateForwarder(result.item as DnsForwarderEntry).subscribe(
+        (response) => { this.refreshData() },
+        (error) => { this.refreshData() }
+      );
     }
     this.refreshData();
   }
@@ -48,6 +60,7 @@ export class ForwardersComponent {
   }
 
   deleteItem(entry: DnsForwarderEntry) {
-    this.dataInterfaceService.deleteForwarder(entry);
+    this.dataInterfaceService.deleteForwarder(entry).subscribe();
+    this.refreshData();
   }
 }

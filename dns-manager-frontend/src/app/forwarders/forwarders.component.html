@@ -4,11 +4,11 @@
     <cds-icon shape="plus"></cds-icon>
   </button>
 </h1>
-<clr-datagrid>
+<clr-datagrid [clrDgLoading]="loading" (clrDgRefresh)="refreshData()">
   <clr-dg-column clrDgField="suffix">DNS Suffix</clr-dg-column>
   <clr-dg-column clrDgField="address">Forward To</clr-dg-column>
   <clr-dg-column clrDgField="note">Note</clr-dg-column>
-  <clr-dg-row *clrDgItems="let forwarder of dnsforwarders">
+  <clr-dg-row *clrDgItems="let forwarder of dnsforwarders" >
     <clr-dg-action-overflow>
       <button class="action-item" (click)="onEdit(forwarder.id)">Edit</button>
       <button class="action-item" (click)="deleteItem(forwarder)">Delete</button>

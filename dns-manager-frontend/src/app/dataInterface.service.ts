@@ -1,88 +1,59 @@
 import { Injectable } from '@angular/core';
 import { DnsAddressEntry } from './dnsaddressentry';
 import { DnsForwarderEntry } from './dnsforwarderentry';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataInterface {
 
-  dnsaddresses: DnsAddressEntry[] = [
-    {
-      id: 1,
-      fqdn: 'test.local',
-      address: '127.0.0.1',
-      note: 'A local test address entry'
-    },
-    {
-      id: 2,
-      fqdn: '2.test.local',
-      address: '127.0.0.2',
-      note: 'Another local test address entry'
-    }
-  ]
+  API_ADDRESS: string = "http://localhost:8000"
 
-  dnsforwarders: DnsForwarderEntry[] = [
-    {
-      id: 1,
-      suffix: 'managed.local',
-      address: '8.8.8.8',
-      note: 'Forward requests for *.managed.local to 8.8.8.8'
-    }
-  ]
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
-
-  getAllAddresses(): DnsAddressEntry[] {
-    return this.dnsaddresses;
+  getAllAddresses(): Observable<DnsAddressEntry[]> {
+    return this.http.get<DnsAddressEntry[]>(this.API_ADDRESS.concat("/address/"));
   }
 
-  getAddressById(id: number): DnsAddressEntry {
-    var copy: DnsAddressEntry = {...this.dnsaddresses.find(entry => entry.id == id) ?? {} as DnsAddressEntry }
-    return copy;
+  getAddressById(id: number): Observable<DnsAddressEntry> {
+    return this.http.get<DnsAddressEntry>(this.API_ADDRESS.concat("/address/", id.toString()));
   }
 
-  getAllForwarders(): DnsForwarderEntry[] {
-    return this.dnsforwarders;
+  getAllForwarders(): Observable<DnsForwarderEntry[]> {
+    return this.http.get<DnsForwarderEntry[]>(this.API_ADDRESS.concat("/forwarder/"));
   }
 
-  getForwarderById(id: number): DnsForwarderEntry {
-    var copy: DnsForwarderEntry = { ...this.dnsforwarders.find(entry => entry.id == id) ?? {} as DnsForwarderEntry };
-    return copy;
+  getForwarderById(id: number): Observable<DnsForwarderEntry> {
+    return this.http.get<DnsForwarderEntry>(this.API_ADDRESS.concat("/forwarder/", id.toString()));
   }
 
-  updateAddress(entry: DnsAddressEntry) {
+  updateAddress(entry: DnsAddressEntry): Observable<DnsAddressEntry> {
     if (entry.id != undefined)
     {
-      var index_to_update = this.dnsaddresses.findIndex(item => item.id == entry.id);
-      this.dnsaddresses[index_to_update] = entry;
+      return this.http.put<DnsAddressEntry>(this.API_ADDRESS.concat("/address/"), entry)
     }
     else
     {
-      entry.id = this.dnsaddresses.length + 1;
-      this.dnsaddresses.push(entry);
+      return this.http.post<DnsAddressEntry>(this.API_ADDRESS.concat("/address/"), entry)
     }
   }
 
   updateForwarder(entry: DnsForwarderEntry) {
     if (entry.id != undefined) {
-      var index_to_update = this.dnsforwarders.findIndex(item => item.id == entry.id);
-      this.dnsforwarders[index_to_update] = entry;  
+      return this.http.put<DnsForwarderEntry>(this.API_ADDRESS.concat("/forwarder/"), entry)
     }
     else {
-      entry.id = this.dnsaddresses.length + 1;
-      this.dnsforwarders.push(entry);
+      return this.http.post<DnsForwarderEntry>(this.API_ADDRESS.concat("/forwarder/"), entry)
     }
-    
   }
 
-  deleteForwarder(entry: DnsForwarderEntry) {
-    var index_to_delete = this.dnsforwarders.findIndex(item => item.id == entry.id);
-    this.dnsforwarders.splice(index_to_delete, 1);
+  deleteForwarder(entry: DnsForwarderEntry): Observable<unknown> {
+    return this.http.delete<unknown>(this.API_ADDRESS.concat("/forwarder/", entry.id.toString()))
   }
 
-  deleteAddress(entry: DnsAddressEntry) {
-    var index_to_delete = this.dnsaddresses.findIndex(item => item.id == entry.id);
-    this.dnsaddresses.splice(index_to_delete, 1);
+  deleteAddress(entry: DnsAddressEntry): Observable<unknown> {
+    return this.http.delete<unknown>(this.API_ADDRESS.concat("/address/", entry.id.toString()))
   }
 }

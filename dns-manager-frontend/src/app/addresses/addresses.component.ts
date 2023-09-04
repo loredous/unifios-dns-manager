@@ -19,6 +19,7 @@ export class AddressesComponent {
   selectedAddress!: DnsAddressEntry;
   dnsaddresses!: DnsAddressEntry[];
   editModalOpen: boolean = false;
+  loading: boolean = false;
 
   constructor() {
     this.selectedAddress = {} as DnsAddressEntry;
@@ -26,20 +27,30 @@ export class AddressesComponent {
   }
 
   onEdit(addressId: number) {
-    this.selectedAddress = this.dataInterfaceService.getAddressById(addressId);
+    this.loading = true
+    this.dataInterfaceService.getAddressById(addressId).subscribe(
+      (response: DnsAddressEntry) => { this.selectedAddress = response; this.loading = false; },
+      (error) => { console.warn(error); this.selectedAddress = {} as DnsAddressEntry; this.loading = false; }
+    )
     this.editModalOpen = true;
   }
 
   refreshData() {
-    this.dnsaddresses = this.dataInterfaceService.getAllAddresses();
+    this.loading = true
+    this.dataInterfaceService.getAllAddresses().subscribe(
+      (response: DnsAddressEntry[]) => { this.dnsaddresses = response; this.loading = false; },
+      (error) => { console.warn(error); this.dnsaddresses = []; this.loading = false; }
+    )
   }
 
   editModalClosed(result: EditModalResult) {
     this.editModalOpen = false;
     if (result.save) {
-      this.dataInterfaceService.updateAddress(result.item as DnsAddressEntry);
+      this.dataInterfaceService.updateAddress(result.item as DnsAddressEntry).subscribe(
+        (response) => { this.refreshData() },
+        (error) => { this.refreshData() }
+      );
     }
-    this.refreshData();
   }
 
   addItem() {
@@ -48,6 +59,7 @@ export class AddressesComponent {
   }
 
   deleteItem(entry: DnsAddressEntry) {
-    this.dataInterfaceService.deleteAddress(entry);
+    this.dataInterfaceService.deleteAddress(entry).subscribe();
+    this.refreshData();
   }
 }

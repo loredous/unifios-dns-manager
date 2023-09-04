@@ -12,7 +12,8 @@ import { ClarityIcons, cogIcon, networkGlobeIcon, helpIcon, libraryIcon, plusIco
 
 // Internal Imports
 import { AddressesComponent } from './addresses/addresses.component';
-import { ForwardersComponent } from './forwarders/forwarders.component'
+import { ForwardersComponent } from './forwarders/forwarders.component';
+import { HelpModalComponent } from './help-modal/help-modal.component'
 
 ClarityIcons.addIcons(cogIcon, networkGlobeIcon, helpIcon, libraryIcon, plusIcon);
 
@@ -27,7 +28,8 @@ ClarityIcons.addIcons(cogIcon, networkGlobeIcon, helpIcon, libraryIcon, plusIcon
     HttpClientModule,
     CdsModule,
     AddressesComponent,
-    ForwardersComponent
+    ForwardersComponent,
+    HelpModalComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

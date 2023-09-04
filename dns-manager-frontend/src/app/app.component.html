@@ -13,14 +13,15 @@
           <cds-icon shape="angle" direction="down"></cds-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-          <a href="..." clrDropdownItem><cds-icon shape="help"></cds-icon> Help</a>
-          <a href="..." clrDropdownItem><cds-icon shape="library"></cds-icon> GitHub</a>
+          <a clrDropdownItem (click)="helpModalIsOpen = true"><cds-icon shape="help"></cds-icon> Help</a>
+          <a href="https://github.com/loredous/unifios-dns-manager" target="_blank" clrDropdownItem><cds-icon shape="library"></cds-icon> GitHub</a>
         </clr-dropdown-menu>
       </clr-dropdown>
     </div>
   </header>
   <div class="content-container">
     <div class="content-area">
+      <app-help-modal [(isOpen)]="helpModalIsOpen" (isOpenChange)="helpModalIsOpen=$event"></app-help-modal>
       <app-addresses></app-addresses>
       <app-forwarders></app-forwarders>
     </div>
