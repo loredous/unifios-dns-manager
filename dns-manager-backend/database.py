@@ -18,7 +18,7 @@ from collections import defaultdict
 from ctypes import ArgumentError
 from logging import Logger, getLogger
 from re import L
-from typing import Any, List
+from typing import Any, List, Self
 from sqlalchemy import create_engine, exc, null, select
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session
 
@@ -48,8 +48,12 @@ class DBForwarderEntry(Base):
     
     def __repr__(self) -> str:
         return f"DBForwarderEntry(ID:{self.id}, Suffix:{self.suffix}, Address:{self.address}, Note:{self.note})"
-    
+
+class DatabaseUninitializedError(Exception):
+    pass
+
 class DBConnection():
+    _connection: Self = None
 
     def __init__(self, connection_string: str = "sqlite://", create_on_init: bool = True, delete_existing: bool = False, logger: Logger = None) -> None:
         if not logger:
@@ -65,6 +69,13 @@ class DBConnection():
         if create_on_init:
             self.logger.debug('Creating/confirming database objects')
             Base.metadata.create_all(self._engine)
+        DBConnection._connection = self
+        
+    @classmethod
+    def get_connection(cls) -> Self:
+        if not cls._connection:
+            raise DatabaseUninitializedError('Database must be initialized first!')
+        return cls._connection
     
     @property
     def session(self) -> Session:

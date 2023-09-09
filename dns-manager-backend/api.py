@@ -14,8 +14,13 @@
 # You should have received a copy of the GNU General Public License 
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
+from functools import wraps
+from sqlite3 import connect
 from typing import List
 from fastapi import FastAPI, HTTPException
+from sqlalchemy.sql.expression import text
+from confmanager import ConfigFileManager
+from database import DBConnection
 from models import DnsAddressEntry, DnsForwarderEntry, NewDnsAddressEntry, NewDnsForwarderEntry
 from contextlib import asynccontextmanager
 import uvicorn
@@ -25,9 +30,20 @@ from fastapi.middleware.cors import CORSMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    DnsForwarderEntry.initialize_orm()
-    DnsAddressEntry.initialize_orm()
+    DBConnection(connection_string="sqlite:////conf/dnsmanager.db")
+    app.extra['configmanager'] = ConfigFileManager()
+    app.extra['configmanager'].start()
     yield
+    app.extra['configmanager'].stop()
+    
+def forces_refresh(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        result = await func(*args, **kwargs)
+        app.extra['configmanager'].force_update()
+        return result
+
+    return wrapper
 
 app = FastAPI(lifespan=lifespan)
 
@@ -43,10 +59,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/status/")
 async def status():
-    DnsForwarderEntry._orm_db_connection.session.execute("SELECT 1")
-    DnsAddressEntry._orm_db_connection.session.execute("SELECT 1")
+    DnsForwarderEntry._orm_db_connection.session.execute(text("SELECT 1"))
+    DnsAddressEntry._orm_db_connection.session.execute(text("SELECT 1"))
 
 @app.get("/address/")
 async def get_all_addresses() -> List[DnsAddressEntry]:
@@ -73,34 +90,40 @@ async def get_forwarder(id: int) -> DnsForwarderEntry:
         raise HTTPException(status_code=404, detail="Item not found")
 
 @app.post("/address/")
+@forces_refresh
 async def add_address(new_address: NewDnsAddressEntry) -> DnsAddressEntry:
     address = DnsAddressEntry(**new_address.model_dump())
     address.save();
     return address
 
 @app.post("/forwarder/")
+@forces_refresh
 async def add_forwarder(new_forwarder: NewDnsForwarderEntry) -> DnsForwarderEntry:
     forwarder = DnsForwarderEntry(**new_forwarder.model_dump())
     forwarder.save();
     return forwarder
 
 @app.put("/address/")
+@forces_refresh
 async def update_address(address: DnsAddressEntry) -> DnsAddressEntry:
     address.save();
     return address
 
 @app.put("/forwarder/")
+@forces_refresh
 async def update_forwarder(forwarder: DnsForwarderEntry) -> DnsForwarderEntry:
     forwarder.save();
     return forwarder
 
 @app.delete("/address/{id}")
+@forces_refresh
 async def delete_address(id: int):
     entry = DnsAddressEntry.get_by_id(id)
     if entry:
         entry.delete()
         
 @app.delete("/forwarder/{id}")
+@forces_refresh
 async def delete_forwarder(id: int):
     entry = DnsForwarderEntry.get_by_id(id)
     if entry:

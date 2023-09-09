@@ -7,6 +7,13 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "dns-manager-backend", "dns-
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "dns-manager-frontend", "dns-manager-frontend\dns-manager-frontend.esproj", "{D593BA2F-8F48-4224-A82D-B52DFB1A5785}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{13EFEE47-5792-4D79-B2C9-E45D1A04D86B}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		dockerinit.sh = dockerinit.sh
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
