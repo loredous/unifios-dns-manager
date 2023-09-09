@@ -46,9 +46,9 @@ class ConfigFileManager():
             forwarders = self._db_connection.get_all(DBForwarderEntry)
             addresses = self._db_connection.get_all(DBAddressEntry)
             for address in addresses:
-                config_out += f"address=/{address.fqdn}/{address.address}/ \n"
+                config_out += f"address=/{address.fqdn}/{address.address} \n"
             for forwarder in forwarders:
-                config_out += f"server=/{forwarder.suffix}/{forwarder.address}/ \n"
+                config_out += f"server=/{forwarder.suffix}/{forwarder.address} \n"
             with open(self.filename, 'w') as conf_file:
                 conf_file.write(config_out)
         except Exception as ex:

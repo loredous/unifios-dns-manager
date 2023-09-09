@@ -24,7 +24,7 @@ import { Observable } from 'rxjs';
 })
 export class DataInterface {
 
-  API_ADDRESS: string = "http://localhost:8000"
+  API_ADDRESS: string = "http://localhost:4201"
 
   constructor(private http: HttpClient) { }
 

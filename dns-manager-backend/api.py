@@ -15,6 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 from functools import wraps
+import os
 from sqlite3 import connect
 from typing import List
 from fastapi import FastAPI, HTTPException
@@ -131,4 +132,5 @@ async def delete_forwarder(id: int):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = os.getenv('API_PORT', 8000)
+    uvicorn.run(app, host="0.0.0.0", port=port)
