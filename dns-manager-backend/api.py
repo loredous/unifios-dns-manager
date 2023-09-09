@@ -30,7 +30,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    DBConnection(connection_string="sqlite:////conf/dnsmanager.db")
+    DBConnection(connection_string="sqlite:///dnsmanager.db")
     app.extra['configmanager'] = ConfigFileManager()
     app.extra['configmanager'].start()
     yield

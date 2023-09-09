@@ -18,7 +18,7 @@ from collections import defaultdict
 from ctypes import ArgumentError
 from logging import Logger, getLogger
 from re import L
-from typing import Any, List, Self
+from typing import Any, List
 from sqlalchemy import create_engine, exc, null, select
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session
 
@@ -53,7 +53,7 @@ class DatabaseUninitializedError(Exception):
     pass
 
 class DBConnection():
-    _connection: Self = None
+    _connection = None
 
     def __init__(self, connection_string: str = "sqlite://", create_on_init: bool = True, delete_existing: bool = False, logger: Logger = None) -> None:
         if not logger:
@@ -72,7 +72,7 @@ class DBConnection():
         DBConnection._connection = self
         
     @classmethod
-    def get_connection(cls) -> Self:
+    def get_connection(cls):
         if not cls._connection:
             raise DatabaseUninitializedError('Database must be initialized first!')
         return cls._connection

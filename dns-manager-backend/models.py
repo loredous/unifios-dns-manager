@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License 
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from typing import Any, ClassVar, List, Self
+from typing import Any, ClassVar, List
 from pydantic import BaseModel, ConfigDict, ValidationError, model_validator
 from sqlalchemy.util import classproperty
 from database import Base, DBAddressEntry, DBForwarderEntry, DBConnection
@@ -31,11 +31,11 @@ class ORMMappedModel(BaseModel):
         return DBConnection.get_connection()
 
     @classmethod
-    def get_all(cls) -> List[Self]:
+    def get_all(cls):
         return cls._orm_db_connection.get_all(cls._orm_type)
     
     @classmethod
-    def get_by_id(cls, id: int) -> Self:
+    def get_by_id(cls, id: int):
         dbobj = cls._orm_db_connection.get_item_by_id(cls._orm_type, id)
         if dbobj:
             obj = cls.from_orm(dbobj[0])
@@ -63,7 +63,7 @@ class ORMMappedModel(BaseModel):
         self._orm_db_item = None
     
     @model_validator(mode='after')
-    def is_not_deleted(self) -> Self:
+    def is_not_deleted(self):
         if not self._orm_db_item:
             AssertionError('Unable to change item that has been deleted from DB.')
         return self
