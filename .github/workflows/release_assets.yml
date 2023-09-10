@@ -18,7 +18,7 @@ jobs:
           zip -r dns-manager-backend release.zip
           zip -r dns-manager-frontend release.zip
           zip unifios_dns_manager_start.sh release.zip
-      - uses: Shopify/upload-to-release@v1
+      - uses: Shopify/upload-to-release@v1.0.1
         with:
           name: update_bundle
           path: release.zip
