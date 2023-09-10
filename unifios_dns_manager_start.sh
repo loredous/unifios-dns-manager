@@ -5,7 +5,7 @@ then
     source vars.sh
 fi
 # Auto Updater
-if [ -z $UPDATE ]
+if [ -n $UPDATE ]
 then
 echo "Beginning auto-update process with stream ${STREAM}"
     if [ -f "current_tag" ]
@@ -15,11 +15,12 @@ echo "Beginning auto-update process with stream ${STREAM}"
         export CURRENT_TAG="0.0.0"
     fi
     echo "Currently installed version is ${CURRENT_TAG}"
-    if [ -z $STREAM ]; then export STREAM="STABLE"; fi
+    if [ -n $STREAM ]; then export STREAM="STABLE"; fi
     if [ $STREAM = "PRERELEASE" ]
     then
         export RELEASE_TAG=$(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r ".[0].tag_name")
     elif [ $STREAM = "STABLE" ]
+    then
         export RELEASE_TAG=$(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r "[.[] | select(.prerelease == false) | .tag_name] | .[0]")
     fi
 

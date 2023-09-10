@@ -134,4 +134,4 @@ async def delete_forwarder(id: int):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host=Settings().api_listen_address, port=Settings().api_port)
+    uvicorn.run(app, host=Settings().api_listen_address, port=int(Settings().api_port))
