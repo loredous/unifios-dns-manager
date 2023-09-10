@@ -17,8 +17,7 @@ jobs:
           zip -r release.zip dns-manager-frontend
           zip release.zip unifios_dns_manager_start.sh
           echo $TAG
-          gh release upload $TAG release.zip 
+          gh release upload ${GITHUB_REF#refs/*/} release.zip 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.ref }}
           
