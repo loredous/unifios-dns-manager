@@ -37,6 +37,7 @@ echo "Beginning auto-update process with stream ${STREAM}"
             unzip -o release.zip
             source vars.sh
         fi
+        rm release.zip
     else
         echo "Latest version already installed. Not upgrading."
     fi
