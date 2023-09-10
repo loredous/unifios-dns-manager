@@ -1,8 +1,6 @@
 on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  release:
+    types: [published]
 
 name: Create release assets
 
@@ -13,13 +11,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Package Code
+      - name: Package Code and upload
         run: |
           zip -r release.zip dns-manager-backend
           zip -r release.zip dns-manager-frontend
           zip release.zip unifios_dns_manager_start.sh
-      - uses: Shopify/upload-to-release@v1.0.1
-        with:
-          name: update_bundle
-          path: release.zip
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          gh release upload $TAG release.zip 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref }}
+          
