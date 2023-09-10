@@ -21,7 +21,7 @@ class ConfigFileManager():
     def _db_connection(self) -> DBConnection:
         return DBConnection.get_connection()
     
-    def __init__(self, filename: str = "/run/dnsmasq.conf.d/conditional_dns.conf", refresh_interval: int = 60, pidfile="/run/dnsmasq.pid") -> None:
+    def __init__(self, filename: str = "/run/dnsmasq.conf.d/conditional_dns.conf", refresh_interval: int = 300, pidfile="/run/dnsmasq.pid") -> None:
         self.filename = filename
         self.refresh_interval = refresh_interval
         self.pidfile = pidfile

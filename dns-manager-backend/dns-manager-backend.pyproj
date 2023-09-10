@@ -11,7 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>dns-manager-backend</Name>
     <RootNamespace>dns-manager-backend</RootNamespace>
-    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|env3.9|$(MSBuildProjectFullPath)</InterpreterId>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <WebBrowserPort>8000</WebBrowserPort>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
@@ -34,11 +34,21 @@
     <Compile Include="models.py" />
     <Compile Include="database.py" />
     <Compile Include="api.py" />
+    <Compile Include="settings.py" />
     <Compile Include="test_smoke_test.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Interpreter Include="env3.9\">
+      <Id>env3.9</Id>
+      <Version>3.9</Version>
+      <Description>env3.9 (Python 3.9)</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
     <Interpreter Include="env\">
       <Id>env</Id>
       <Version>3.11</Version>

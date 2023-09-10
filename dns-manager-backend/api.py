@@ -26,12 +26,14 @@ from models import DnsAddressEntry, DnsForwarderEntry, NewDnsAddressEntry, NewDn
 from contextlib import asynccontextmanager
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+from settings import Settings
+
 
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    DBConnection(connection_string="sqlite:///dnsmanager.db")
+    DBConnection(connection_string=Settings().db_connection_string)
     app.extra['configmanager'] = ConfigFileManager()
     app.extra['configmanager'].start()
     yield
@@ -132,5 +134,4 @@ async def delete_forwarder(id: int):
 
 
 if __name__ == "__main__":
-    port = os.getenv('API_PORT', 8000)
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host=Settings().api_listen_address, port=Settings().api_port)
