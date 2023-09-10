@@ -1,7 +1,9 @@
 #!/bin/bash
 
-source vars.sh
-
+if [ -f "vars.sh"]
+then
+    source vars.sh
+fi
 # Auto Updater
 if [ -z $UPDATE ]
 then
@@ -23,6 +25,7 @@ echo "Beginning auto-update process with stream ${STREAM}"
     else
         echo "New install detected, including vars.sh with default values"
         unzip -o release.zip
+        source vars.sh
     fi
 fi
 
