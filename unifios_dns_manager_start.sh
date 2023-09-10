@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "vars.sh"]
+if [ -f "vars.sh" ]
 then
     source vars.sh
 fi
@@ -8,24 +8,37 @@ fi
 if [ -z $UPDATE ]
 then
 echo "Beginning auto-update process with stream ${STREAM}"
-    if [ -z $STREAM ]; then export STREAM="STABLE";
+    if [ -f "current_tag" ]
+    then
+        export CURRENT_TAG=$(cat current_tag)
+    else
+        export CURRENT_TAG="0.0.0"
+    fi
+    echo "Currently installed version is ${CURRENT_TAG}"
+    if [ -z $STREAM ]; then export STREAM="STABLE"; fi
     if [ $STREAM = "PRERELEASE" ]
     then
-        export RELEASE_TAG = $(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq ".[0].tag_name")
-    else
-        export RELEASE_TAG = $(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq "[.[] | select(.prerelease == false) | .tag_name] | .[0]")
+        export RELEASE_TAG = $(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r ".[0].tag_name")
+    elif [ $STREAM = "STABLE" ]
+        export RELEASE_TAG = $(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r "[.[] | select(.prerelease == false) | .tag_name] | .[0]")
     fi
 
-    wget -O release.zip https://github.com/loredous/unifios-dns-manager/releases/download/${RELEASE_TAG}/release.zip
-    
-    if [ -f "vars.sh"]
+    if [ CURRENT_TAG != RELEASE_TAG ]
     then
-        echo "Existing install detected, not overwriting vars.sh"
-        unzip -o release.zip -x vars.sh
+        echo "Installed release does not match latest from ${STREAM}. Doing in-place upgrade."
+        wget -O release.zip https://github.com/loredous/unifios-dns-manager/releases/download/${RELEASE_TAG}/release.zip
+    
+        if [ -f "vars.sh"]
+        then
+            echo "Existing install detected, not overwriting vars.sh"
+            unzip -o release.zip -x vars.sh
+        else
+            echo "New install detected, including vars.sh with default values"
+            unzip -o release.zip
+            source vars.sh
+        fi
     else
-        echo "New install detected, including vars.sh with default values"
-        unzip -o release.zip
-        source vars.sh
+        echo "Latest version already installed. Not upgrading."
     fi
 fi
 
