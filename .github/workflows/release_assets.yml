@@ -15,9 +15,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Package Code
         run: |
-          zip -r dns-manager-backend release.zip
-          zip -r dns-manager-frontend release.zip
-          zip unifios_dns_manager_start.sh release.zip
+          zip -r release.zip dns-manager-backend
+          zip -r release.zip dns-manager-frontend
+          zip release.zip unifios_dns_manager_start.sh
       - uses: Shopify/upload-to-release@v1.0.1
         with:
           name: update_bundle
