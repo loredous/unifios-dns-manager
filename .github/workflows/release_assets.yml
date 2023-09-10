@@ -21,6 +21,7 @@ jobs:
           zip release.zip vars.sh
           echo $TAG
           gh release upload ${GITHUB_REF_NAME} release.zip 
+          gh release upload ${GITHUB_REF_NAME} unifios_dns_manager_start.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
