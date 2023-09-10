@@ -1,17 +1,14 @@
 # Configuration
 #### DEPLOYMENT ####
-# Should we check for new versions each time the script is run?
+# Should we check for new versions each time the script is run? (to disable, comment out this line)
 export UPDATE="1"
 
 # Which level of release should auto-update use. Options are: STABLE PRERELEASE MAIN
 # STABLE - Confirmed stable releases
 # PRERELEASE - Early release candidates. May not always be fully stable or tested
-export STREAM="PRERELEASE"
+export STREAM="STABLE"
 
 #### API ####
-
-# The address where the API will be reachable (Should be the primary address of your Unifi device)
-export API_HOST_ADDRESS="192.168.0.1"
 
 # The port where the API will be reachable (Shouldn't need to change this unless you already have something on this port)
 export API_PORT="5301"

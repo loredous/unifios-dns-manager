@@ -18,6 +18,7 @@ jobs:
           zip -r release.zip dns-manager-backend
           zip -r release.zip dns-manager-frontend
           zip release.zip unifios_dns_manager_start.sh
+          zip release.zip vars.sh
           echo $TAG
           gh release upload ${GITHUB_REF_NAME} release.zip 
         env:

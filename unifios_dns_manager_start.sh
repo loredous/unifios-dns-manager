@@ -3,9 +3,10 @@
 source vars.sh
 
 # Auto Updater
-if [ $UPDATE = 1 ]
+if [ -z $UPDATE ]
 then
 echo "Beginning auto-update process with stream ${STREAM}"
+    if [ -z $STREAM ]; then export STREAM="STABLE";
     if [ $STREAM = "PRERELEASE" ]
     then
         export RELEASE_TAG = $(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq ".[0].tag_name")
@@ -14,7 +15,15 @@ echo "Beginning auto-update process with stream ${STREAM}"
     fi
 
     wget -O release.zip https://github.com/loredous/unifios-dns-manager/releases/download/${RELEASE_TAG}/release.zip
-    unzip -o release.zip
+    
+    if [ -f "vars.sh"]
+    then
+        echo "Existing install detected, not overwriting vars.sh"
+        unzip -o release.zip -x vars.sh
+    else
+        echo "New install detected, including vars.sh with default values"
+        unzip -o release.zip
+    fi
 fi
 
 # STARTING API
