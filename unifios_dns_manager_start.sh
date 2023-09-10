@@ -18,9 +18,9 @@ echo "Beginning auto-update process with stream ${STREAM}"
     if [ -z $STREAM ]; then export STREAM="STABLE"; fi
     if [ $STREAM = "PRERELEASE" ]
     then
-        export RELEASE_TAG = $(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r ".[0].tag_name")
+        export RELEASE_TAG=$(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r ".[0].tag_name")
     elif [ $STREAM = "STABLE" ]
-        export RELEASE_TAG = $(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r "[.[] | select(.prerelease == false) | .tag_name] | .[0]")
+        export RELEASE_TAG=$(curl -s "https://api.github.com/repos/loredous/unifios-dns-manager/releases" | jq -r "[.[] | select(.prerelease == false) | .tag_name] | .[0]")
     fi
 
     if [ CURRENT_TAG != RELEASE_TAG ]
