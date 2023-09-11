@@ -29,7 +29,7 @@ echo "Beginning auto-update process with stream ${STREAM}"
         echo "Installed release does not match latest from ${STREAM}. Doing in-place upgrade."
         wget -O release.zip https://github.com/loredous/unifios-dns-manager/releases/download/${RELEASE_TAG}/release.zip
     
-        if [ -f "vars.sh"]
+        if [ -f "vars.sh" ]
         then
             echo "Existing install detected, not overwriting vars.sh"
             unzip -o release.zip -x vars.sh

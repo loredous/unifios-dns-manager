@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # REQUIRED SETTINGS
-    api_port: str
+    api_port: str = "5301"
     # OPTIONAL SETTINGS
     api_listen_address: str = "0.0.0.0"
     db_connection_string: str = "sqlite:///dnsmanager.db"

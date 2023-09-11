@@ -29,46 +29,46 @@ export class DataInterface {
   constructor(private http: HttpClient) { }
 
   getAllAddresses(): Observable<DnsAddressEntry[]> {
-    return this.http.get<DnsAddressEntry[]>(this.API_ADDRESS.concat("/address/"));
+    return this.http.get<DnsAddressEntry[]>("/address/");
   }
 
   getAddressById(id: number): Observable<DnsAddressEntry> {
-    return this.http.get<DnsAddressEntry>(this.API_ADDRESS.concat("/address/", id.toString()));
+    return this.http.get<DnsAddressEntry>("/address/".concat(id.toString()));
   }
 
   getAllForwarders(): Observable<DnsForwarderEntry[]> {
-    return this.http.get<DnsForwarderEntry[]>(this.API_ADDRESS.concat("/forwarder/"));
+    return this.http.get<DnsForwarderEntry[]>("/forwarder/");
   }
 
   getForwarderById(id: number): Observable<DnsForwarderEntry> {
-    return this.http.get<DnsForwarderEntry>(this.API_ADDRESS.concat("/forwarder/", id.toString()));
+    return this.http.get<DnsForwarderEntry>("/forwarder/".concat(id.toString()));
   }
 
   updateAddress(entry: DnsAddressEntry): Observable<DnsAddressEntry> {
     if (entry.id != undefined)
     {
-      return this.http.put<DnsAddressEntry>(this.API_ADDRESS.concat("/address/"), entry)
+      return this.http.put<DnsAddressEntry>("/address/", entry)
     }
     else
     {
-      return this.http.post<DnsAddressEntry>(this.API_ADDRESS.concat("/address/"), entry)
+      return this.http.post<DnsAddressEntry>("/address/", entry)
     }
   }
 
   updateForwarder(entry: DnsForwarderEntry) {
     if (entry.id != undefined) {
-      return this.http.put<DnsForwarderEntry>(this.API_ADDRESS.concat("/forwarder/"), entry)
+      return this.http.put<DnsForwarderEntry>("/forwarder/", entry)
     }
     else {
-      return this.http.post<DnsForwarderEntry>(this.API_ADDRESS.concat("/forwarder/"), entry)
+      return this.http.post<DnsForwarderEntry>("/forwarder/", entry)
     }
   }
 
   deleteForwarder(entry: DnsForwarderEntry): Observable<unknown> {
-    return this.http.delete<unknown>(this.API_ADDRESS.concat("/forwarder/", entry.id.toString()))
+    return this.http.delete<unknown>("/forwarder/".concat(entry.id.toString()))
   }
 
   deleteAddress(entry: DnsAddressEntry): Observable<unknown> {
-    return this.http.delete<unknown>(this.API_ADDRESS.concat("/address/", entry.id.toString()))
+    return this.http.delete<unknown>("/address/".concat(entry.id.toString()))
   }
 }
