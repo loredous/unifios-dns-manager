@@ -39,6 +39,7 @@ echo "Beginning auto-update process with stream ${STREAM}"
             source vars.sh
         fi
         rm release.zip
+        chmod +x unifios_dns_manager_start.sh
     else
         echo "Latest version already installed. Not upgrading."
     fi
